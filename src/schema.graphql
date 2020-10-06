@@ -1,67 +1,31 @@
-    # The limit is called take, meaning you’re “taking” x elements after a provided start index.
-    # The start index is called skip, since you’re skipping that many elements in the list before collecting the items to be returned. If skip is not provided, it’s 0 by default. The pagination then always starts from the beginning of the list.
-    # feed param orderBy references enum and input below 
     type Query {
         info: String!
-        feed(filter: String, skip: Int, take: Int, orderBy: LinkOrderByInput): Feed!
-        link(id: ID!): Link
-    }
-
-    type Feed {
-        links: [Link!]!
-        count: Int!
+        scorelist(filter: String, skip: Int, take: Int, orderBy: ScoreOrderByInput): ScoreList!
+        score(id: ID!): Score!
     }
 
     type Mutation {
-        post(url: String!, description: String!, url: String!): Link!
-        updateLink(id: ID!, description: String!, url: String!): Link
-        deleteLink(id: ID!): Link
-        signup(email: String!, password: String!, name: String!): AuthPayload
-        login(email: String!, password: String!): AuthPayload
-        vote(linkId: ID!): Vote
-    }
-    
-    type Link {
-        id: ID!
-        description: String!
-        url: String!
-        postedBy: User
-        votes: [Vote!]!
+        newscore(email: String!, name: String!, score: Int!): Score!
+        updatescore(id: ID!, email: String!, name: String!, score: Int!): Score
+        deletescore(id: ID!): Score
     }
 
-    type AuthPayload {
-        token: String
-        user: User
+    type ScoreList {
+        scores: [Score!]!
+        count: Int!
     }
 
-    type User {
+    type Score {
         id: ID!
         name: String!
         email: String!
-        links: [Link!]!
+        score: Int!
     }
 
-    type Subscription {
-        newLink: Link
-        newVote: Vote
-    }
-
-    type Vote {
-        id: ID!
-        link: Link!
-        user: User!
-    }
-
-    # With Prisma, it is possible to return lists of elements that are sorted (ordered) according to specific criteria. 
-    # For example, you can order the list of Links alphabetically by their url or description. 
-    # For the Hacker News API, you’ll leave it up to the client to decide how exactly it should be sorted
-    # and thus include all the ordering options from the Prisma API in the API of your GraphQL server. 
-    # You can do so by creating an input type and an enum to represent the ordering options.
-
-    input LinkOrderByInput {
-        description: Sort
-        url: Sort
-        createdAt: Sort
+    input ScoreOrderByInput {
+        email: Sort
+        name: Sort
+        score: Sort
     }
 
     enum Sort {

@@ -1,42 +1,33 @@
-async function feed(parent, args, context, info) {
+async function scorelist(parent, args, context, info) {
 
     const where = args.filter
     ? {
         OR: [
-            { description: { contains: args.filter } },
-            { url: { contains: args.filter } },
+                { email: { contains: args.filter } },
+                { name: { contains: args.filter } },
         ],
     } : {};
 
-// The limit is called take, meaning you’re “taking” x elements after a provided start index.
-// The start index is called skip, since you’re skipping that many elements in the list before collecting the items to be returned. If skip is not provided, it’s 0 by default. The pagination then always starts from the beginning of the list.
-
-
-    const links = await context.prisma.link.findMany({
+    const scores = await context.prisma.score.findMany({
         where,
         skip: args.skip,
         take: args.take,
         orderBy: args.orderBy,
     });
 
-    // references same where declared above 
-    const count = await context.prisma.link.count({ where });
+    const count = await context.prisma.score.count({ where });
 
     return {
-        links,
+        scores,
         count,
     };
 }
 
-async function link (_, { id }, context) {
-    return context.prisma.link.findOne({
-        where: {
-            id: parseInt(id)
-        }
-    });
+async function score (_, { id }, context) {
+    return context.prisma.score.findOne({ where: { id: Number(id) } });
 }
 
 module.exports = {
-    feed,
-    link,
+    scorelist,
+    score,
 };
