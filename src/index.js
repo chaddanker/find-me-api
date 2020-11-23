@@ -49,5 +49,9 @@ server.express.use(
   })
 );
 
+server.express.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', true)
+  next()
+})
 
 server.start(opts, () => console.log('server running on port 4000'));
