@@ -1,7 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
+const session = require("express-session");
 const { PrismaClient } = require('@prisma/client');
 const { PubSub } = require('graphql-yoga');
-const session = require("express-session");
 
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
@@ -27,12 +27,10 @@ const server = new GraphQLServer({
 });
 
 const opts = {
+  port: 4000,
   cors: {
     credentials: true,
-    origin: ["https://find-me-lime.vercel.app"], // your frontend url.
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204
+    origin: ["http://localhost:3000"] // your frontend url.
   }
 };
 
@@ -52,9 +50,5 @@ server.express.use(
   })
 );
 
-server.express.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true)
-  next()
-})
 
 server.start(opts, () => console.log('server running on port 4000'));
