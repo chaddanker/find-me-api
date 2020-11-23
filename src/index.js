@@ -1,7 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { PrismaClient } = require('@prisma/client');
 const { PubSub } = require('graphql-yoga');
-const cors = require('cors')
+const session = require("express-session");
 
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
