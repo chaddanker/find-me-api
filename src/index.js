@@ -14,6 +14,14 @@ const resolvers = {
     Mutation,
 };
 
+const opts = {
+  port: process.env.PORT,
+  cors: {
+    credentials: true,
+    origin: ["https://find-me-lime.vercel.app"] // your frontend url.
+  }
+};
+
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
     resolvers,
@@ -24,15 +32,8 @@ const server = new GraphQLServer({
             pubsub,
         };
     },
+    opts
 });
-
-const opts = {
-  port: process.env.PORT,
-  cors: {
-    credentials: true,
-    origin: ["https://find-me-lime.vercel.app"] // your frontend url.
-  }
-};
 
 const SESSION_SECRET = "lsdfjlkjlkewaqra";
 
@@ -51,4 +52,4 @@ server.express.use(
 );
 
 
-server.start(opts, () => console.log('server running on port 4000'));
+server.start(() => console.log('server running on port 4000'));
