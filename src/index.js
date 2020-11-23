@@ -27,7 +27,6 @@ const server = new GraphQLServer({
 });
 
 const opts = {
-  port: 4000,
   cors: {
     credentials: true,
     origin: ["https://find-me-lime.vercel.app"] // your frontend url.
