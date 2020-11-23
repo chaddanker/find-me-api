@@ -1,40 +1,44 @@
-async function newscore(parent, args, context, info) {
+async function newuser(parent, args, context, info) {
 
-    const newScore = await context.prisma.score.create({
+    const newUser = await context.prisma.user.create({
         data: {
             name: args.name,
-            email: args.email,
-            score: Number(args.score),
+            username: args.username,
+            cell: args.cell,
+            qrcode: args.qrcode,
+            location: args.location
         }
     });
 
-    return newScore;
+    return newUser;
 }
 
-async function updatescore (_, {id, name, email, score}, context) {
-    const updatedScore = await context.prisma.score.update({
+async function updateuser (_, args, context) {
+    const updatedUser = await context.prisma.user.update({
         where: {
-            id: Number(id)
+            id: Number(args.id)
         },
         data: {
-            email,
-            name,
-            score,
+            name: args.name,
+            username: args.username,
+            cell: args.cell,
+            qrcode: args.qrcode,
+            location: args.location
         }
     });
 
-    return updatedScore;
+    return updatedUser;
 }
 
-async function deletescore (_, {id}, context) {
-    const deletedScore = await context.prisma.score.delete({ where: { id: Number(id) }, });
+async function deleteuser (_, {id}, context) {
+    const deletedUser = await context.prisma.user.delete({ where: { id: Number(id) }, });
 
-    return deletedScore;
+    return deletedUser;
 }
 
 
 module.exports = {
-    newscore,
-    updatescore,
-    deletescore,
+    newuser,
+    updateuser,
+    deleteuser,
 }

@@ -1,31 +1,32 @@
     type Query {
         info: String!
-        scorelist(filter: String, skip: Int, take: Int, orderBy: ScoreOrderByInput): ScoreList!
-        score(id: ID!): Score!
+        userlist(filter: String, skip: Int, take: Int, orderBy: UserOrderByInput): UserList!
+        user(id: ID!): User!
     }
 
     type Mutation {
-        newscore(email: String!, name: String!, score: Int!): Score!
-        updatescore(id: ID!, email: String!, name: String!, score: Int!): Score
-        deletescore(id: ID!): Score
+        newuser(name: String!, username: String, location: String, qrcode: String, cell: String): User!
+        updateuser(id: ID!, name: String!, username: String, location: String, qrcode: String, cell: String): User
+        deleteuser(id: ID!): User
     }
 
-    type ScoreList {
-        scores: [Score!]!
+    type UserList {
+        users: [User!]!
         count: Int!
     }
 
-    type Score {
-        id: ID!
-        name: String!
-        email: String!
-        score: Int!
+    type User {
+        id:        ID!
+        username:  String
+        name:      String
+        cell:      String
+        qrcode:    String
+        location:  String
     }
 
-    input ScoreOrderByInput {
-        email: Sort
+    input UserOrderByInput {
+        username: Sort
         name: Sort
-        score: Sort
     }
 
     enum Sort {

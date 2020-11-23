@@ -7,11 +7,13 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model Score {
+model User {
   id        Int           @id @default(autoincrement())
   createdAt DateTime      @default(now())
-  email     String
+  username  String
   name      String
-  score     Int
+  cell      String
+  qrcode    String
+  location  String
 }
 

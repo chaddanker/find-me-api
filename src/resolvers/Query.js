@@ -1,33 +1,33 @@
-async function scorelist(parent, args, context, info) {
+async function userlist(parent, args, context, info) {
 
     const where = args.filter
     ? {
         OR: [
-                { email: { contains: args.filter } },
+                { username: { contains: args.filter } },
                 { name: { contains: args.filter } },
         ],
     } : {};
 
-    const scores = await context.prisma.score.findMany({
+    const users = await context.prisma.user.findMany({
         where,
         skip: args.skip,
         take: args.take,
         orderBy: args.orderBy,
     });
 
-    const count = await context.prisma.score.count({ where });
+    const count = await context.prisma.user.count({ where });
 
     return {
-        scores,
+        users,
         count,
     };
 }
 
-async function score (_, { id }, context) {
-    return context.prisma.score.findOne({ where: { id: Number(id) } });
+async function user (_, { id, username }, context) {
+    return context.prisma.user.findOne({ where: { username } });
 }
 
 module.exports = {
-    scorelist,
-    score,
+    userlist,
+    user,
 };
