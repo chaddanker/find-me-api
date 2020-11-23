@@ -29,7 +29,10 @@ const server = new GraphQLServer({
 const opts = {
   cors: {
     credentials: true,
-    origin: ["https://find-me-lime.vercel.app"] // your frontend url.
+    origin: ["https://find-me-lime.vercel.app"], // your frontend url.
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   }
 };
 
