@@ -15,11 +15,11 @@ const resolvers = {
 };
 
 const opts = {
-  port: process.env.PORT,
+  port: process.env.PORT || 4000,
   cors: {
     credentials: true,
-    origin: ["https://find-me-lime.vercel.app"] // your frontend url.
-  }
+    origin: "*" // your frontend url.
+  },
 };
 
 const server = new GraphQLServer({
@@ -50,6 +50,5 @@ server.express.use(
     }
   })
 );
-
 
 server.start(() => console.log('server running on port 4000'));
